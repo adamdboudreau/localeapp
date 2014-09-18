@@ -15,8 +15,9 @@ module Localeapp
 
       def set_command_line_arguments(args = {})
         sanitized_args = {}
-        if args[:k]
-          sanitized_args[:api_key] = args[:k]
+        sanitized_args[:api_key] = args[:k] if args[:k]
+        [:api_key, :translation_data_directory].each do |k|
+          sanitized_args[k] = args[k] if args[k]
         end
         sanitized_args.each do |setting, value|
           Localeapp.configuration.send("#{setting}=", value)
